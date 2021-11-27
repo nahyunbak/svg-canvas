@@ -10,13 +10,15 @@ export const svgRedoState = atom({
   default: [],
 });
 
+export const currentShapeDefault = {
+  kind: "line",
+  color: "black",
+  weight: "1",
+  fillColor: "none",
+  dots: "",
+};
+
 export const currentShape = atom({
   key: "currentShape",
-  default: {
-    kind: "line",
-    color: "black",
-    weight: "light",
-    fillColor: "none",
-    dots: "",
-  },
+  default: currentShapeDefault,
 });

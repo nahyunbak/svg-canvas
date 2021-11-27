@@ -88,9 +88,9 @@ function Tool() {
                   name="weight"
                   onChange={handleChange}
                 >
-                  <MenuItem value="light">얇게</MenuItem>
-                  <MenuItem value="normal">보통</MenuItem>
-                  <MenuItem value="strong">굵게</MenuItem>
+                  <MenuItem value="1">얇게</MenuItem>
+                  <MenuItem value="3">보통</MenuItem>
+                  <MenuItem value="5">굵게</MenuItem>
                 </Select>
               </FormControl>
             </Box>

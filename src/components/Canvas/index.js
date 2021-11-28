@@ -101,6 +101,9 @@ function Canvas() {
                       2
                     )
                 )}
+                stroke={currentSVG.color}
+                fill={currentSVG.fillColor}
+                stroke-width={currentSVG.weight}
               />
             ) : (
               ""
@@ -128,6 +131,9 @@ function Canvas() {
                       Math.pow(Math.abs(item.dots[0][0] - item.dots[1][0]), 2) +
                         Math.pow(Math.abs(item.dots[0][1] - item.dots[1][1]), 2)
                     )}
+                    stroke={item.color}
+                    fill={item.fillColor}
+                    stroke-width={item.weight}
                   />
                 );
               }

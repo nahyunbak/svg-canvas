@@ -50,6 +50,8 @@ function Nav() {
   const onClickReset = () => {
     setCurrentSVGList([]);
     setCurrentSVG({ ...currentSVG, dots: "" });
+    setHistoryRedoState([]);
+    setRedoSVGList([]);
   };
 
   //undo 기능 onClick함수

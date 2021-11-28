@@ -2,7 +2,11 @@
 ✅ svg 벡터 기반의 그림판을 리셋, 저장, undo 및 redo 기능과 함께 구현했다.
 
 # 스크린샷 
-https://user-images.githubusercontent.com/61341571/143773051-c4a21554-d408-4d3d-a0c8-c448ca4a6b7a.mp4
+
+
+https://user-images.githubusercontent.com/61341571/143773600-b8ac2d28-853a-484b-9938-e9cc8ffbdd15.mp4
+
+
 
 # 기능 소개 
 ✅ 선택하기 : 종류, 색깔, 선 굵기, 채우기 색깔을 고를 수 있다.

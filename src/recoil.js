@@ -10,6 +10,11 @@ export const svgRedoState = atom({
   default: [],
 });
 
+export const svgHistoryRedoState = atom({
+  key: "svgHistoryRedoState",
+  default: [],
+});
+
 export const currentShapeDefault = {
   kind: "line",
   color: "black",

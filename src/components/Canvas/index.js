@@ -33,7 +33,7 @@ function Canvas() {
   });
 
   const onClick = (e) => {
-    if (currentSVG.kind === "polygram" || currentSVG.kind === "line") {
+    if (currentSVG.kind === "polygram") {
       setCurrentSVG({
         ...currentSVG,
         dots: [
@@ -45,25 +45,48 @@ function Canvas() {
       });
     }
     if (currentSVG.kind === "circle") {
-      if (currentSVG.dots.length <= 2) {
+      if (currentSVG.dots.length < 2) {
         setCurrentSVG({
           ...currentSVG,
           dots: [
             ...currentSVG.dots,
-            `${e.clientX - cursorInput.current.getBoundingClientRect().left}, ${
-              e.clientY - cursorInput.current.getBoundingClientRect().top
-            }`,
+            [
+              e.clientX - cursorInput.current.getBoundingClientRect().left,
+              e.clientY - cursorInput.current.getBoundingClientRect().top,
+            ],
           ],
         });
       }
-      if (currentSVG.dots.length > 2) {
+      if (currentSVG.dots.length >= 2) {
         setCurrentSVG({
           ...currentSVG,
           dots: [
-            `${e.clientX - cursorInput.current.getBoundingClientRect().left}, ${
-              e.clientY - cursorInput.current.getBoundingClientRect().top
-            }`,
+            [
+              e.clientX - cursorInput.current.getBoundingClientRect().left,
+              e.clientY - cursorInput.current.getBoundingClientRect().top,
+            ],
           ],
+        });
+      }
+    }
+    if (currentSVG.kind === "line") {
+      console.log(currentSVG.dots);
+      if (currentSVG.dots.length < 2) {
+        setCurrentSVG({
+          ...currentSVG,
+          dots: [
+            ...currentSVG.dots,
+            [
+              e.clientX - cursorInput.current.getBoundingClientRect().left,
+              e.clientY - cursorInput.current.getBoundingClientRect().top,
+            ],
+          ],
+        });
+      }
+      if (currentSVG.dots.length >= 2) {
+        setCurrentSVG({
+          ...currentSVG,
+          dots: [],
         });
       }
     }
@@ -92,9 +115,48 @@ function Canvas() {
             ) : (
               ""
             )}
-
+            {currentSVG.kind === "circle" && currentSVG.dots.length === 2 ? (
+              <circle
+                cx={currentSVG.dots[0][0]}
+                cy={currentSVG.dots[0][1]}
+                r={Math.sqrt(
+                  Math.pow(
+                    Math.abs(currentSVG.dots[0][0] - currentSVG.dots[1][0]),
+                    2
+                  ) +
+                    Math.pow(
+                      Math.abs(currentSVG.dots[0][1] - currentSVG.dots[1][1]),
+                      2
+                    )
+                )}
+              />
+            ) : (
+              ""
+            )}
+            {currentSVG.kind === "line" && currentSVG.dots.length === 2 ? (
+              <line
+                x1={currentSVG.dots[0][0]}
+                y1={currentSVG.dots[0][1]}
+                x2={currentSVG.dots[1][0]}
+                y2={currentSVG.dots[1][1]}
+                stroke={currentSVG.color}
+              ></line>
+            ) : (
+              ""
+            )}
             {currentSVGList.map((item) => {
-              console.log(1);
+              if (item.kind === "circle") {
+                return (
+                  <circle
+                    cx={item.dots[0][0]}
+                    cy={item.dots[0][1]}
+                    r={Math.sqrt(
+                      Math.pow(Math.abs(item.dots[0][0] - item.dots[1][0]), 2) +
+                        Math.pow(Math.abs(item.dots[0][1] - item.dots[1][1]), 2)
+                    )}
+                  />
+                );
+              }
               if (item.kind === "polygram") {
                 return (
                   <polygon
@@ -103,6 +165,17 @@ function Canvas() {
                     fill={item.fillColor}
                     stroke-width={item.weight}
                   />
+                );
+              }
+              if (item.kind === "line") {
+                return (
+                  <line
+                    x1={item.dots[0][0]}
+                    y1={item.dots[0][1]}
+                    x2={item.dots[1][0]}
+                    y2={item.dots[1][1]}
+                    stroke={item.color}
+                  ></line>
                 );
               }
             })}

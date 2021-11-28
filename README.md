@@ -16,10 +16,12 @@
 ✅ 저장하기 : 캔버스를 저장한다.
 
 <br/>
+
 # 배포 
 ✅ vercel을 사용하여 배포했다 :  https://svg-canvas.vercel.app/
 
 <br/>
+
 # 비디오  
 https://user-images.githubusercontent.com/61341571/143773600-b8ac2d28-853a-484b-9938-e9cc8ffbdd15.mp4
 

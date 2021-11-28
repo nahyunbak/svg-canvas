@@ -130,6 +130,8 @@ function Nav() {
           x2="${item.dots[1][0]}"
           y2="${item.dots[1][1]}"
           stroke="${item.color}"
+          fill="${item.fillColor}"
+          stroke-width="${item.weight}"
         ></line>`;
           }
         })

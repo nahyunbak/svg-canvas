@@ -24,7 +24,7 @@ export const NavArea = styled.div`
 `;
 
 export const NavFinishOrSaveWrapper = styled.div`
-  width: 400px;
+  width: 500px;
   height: 50px;
   ${horizontalCenterStyle}
 `;
@@ -57,6 +57,16 @@ export const NavSaveButton = styled.div`
   color: white;
 `;
 
+export const NavResetButton = styled.div`
+  cursor: pointer;
+  width: 100px;
+  height: 50px;
+  font-weight: 600;
+  ${CenterCenterStyle}
+  border-radius: 10px;
+  background-image: linear-gradient(to top, #c71d6f 0%, #d09693 100%);
+  color: white;
+`;
 export const NavDoWrapper = styled.div`
   width: 200px;
   height: 50px;

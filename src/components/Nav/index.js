@@ -9,6 +9,7 @@ import {
   NavFinishButton,
   NavFinishOrSaveWrapper,
   NavRedoButton,
+  NavResetButton,
   NavSaveButton,
   NavUndoButton,
   NavWrapper,
@@ -17,22 +18,19 @@ import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { useResetRecoilState } from "recoil";
 
 function Nav() {
-  const handleChange = (e) => {
-    setCurrentSVG({ ...currentSVG, ...{ [e.target.name]: e.target.value } });
-  };
   const [currentSVG, setCurrentSVG] = useRecoilState(currentShape);
   const [currentSVGList, setCurrentSVGList] = useRecoilState(svgListState);
   const onClickFinish = () => {
     if (currentSVG.dots.length !== 0) {
-      setCurrentSVG({
-        ...currentSVG,
-        dots: `${currentSVG.dots} Z`,
-      });
+      setCurrentSVGList([
+        ...currentSVGList,
+        {
+          ...currentSVG,
+          dots: `${currentSVG.dots} Z`,
+        },
+      ]);
     }
-    setCurrentSVGList([...currentSVGList, currentSVG]);
     setCurrentSVG({ ...currentSVG, dots: "" });
-
-    console.log(currentSVGList);
   };
 
   return (
@@ -40,8 +38,11 @@ function Nav() {
       <NavWrapper>
         <NavArea>
           <NavFinishOrSaveWrapper>
-            <NavSaveButton onClick={onClickFinish}>저장하기</NavSaveButton>
-            <NavFinishButton>이번 그림 마무리하기</NavFinishButton>
+            <NavSaveButton>저장하기</NavSaveButton>
+            <NavFinishButton onClick={onClickFinish}>
+              이번 그림 마무리하기
+            </NavFinishButton>
+            <NavResetButton>리셋하기</NavResetButton>
           </NavFinishOrSaveWrapper>
 
           <NavDoWrapper>

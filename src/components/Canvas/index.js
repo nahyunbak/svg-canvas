@@ -62,13 +62,6 @@ function Canvas() {
       <CanvasWrapper>
         <CanvasArea onClick={onClick} ref={cursorInput}>
           <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
-            <path
-              d={currentSVG.dots}
-              stroke={currentSVG.color}
-              fill={currentSVG.fillColor}
-              stroke-width={currentSVG.weight}
-            />
-
             {currentSVGList.map((item) => {
               console.log(1);
               if (item.kind === "line") {
@@ -82,6 +75,12 @@ function Canvas() {
                 );
               }
             })}
+            <path
+              d={currentSVG.dots}
+              stroke={currentSVG.color}
+              fill={currentSVG.fillColor}
+              stroke-width={currentSVG.weight}
+            />
           </svg>
         </CanvasArea>
       </CanvasWrapper>

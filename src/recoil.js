@@ -16,7 +16,7 @@ export const svgHistoryRedoState = atom({
 });
 
 export const currentShapeDefault = {
-  kind: "line",
+  kind: "polygram",
   color: "black",
   weight: "1",
   fillColor: "none",

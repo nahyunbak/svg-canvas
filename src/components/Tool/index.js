@@ -39,7 +39,7 @@ function Tool() {
                 >
                   <MenuItem value="line">선</MenuItem>
                   <MenuItem value="circle">원</MenuItem>
-                  <MenuItem value="rectangle">직사각형</MenuItem>
+                  <MenuItem value="polygram">다각형</MenuItem>
                 </Select>
               </FormControl>
             </Box>

@@ -30,16 +30,21 @@ function Nav() {
   const [historyRedoState, setHistoryRedoState] =
     useRecoilState(svgHistoryRedoState);
   const onClickFinish = () => {
+    // 직선일 경우
+    // 다각형일 경우
     if (currentSVG.dots.length !== 0) {
-      setCurrentSVGList([
-        ...currentSVGList,
-        {
-          ...currentSVG,
-          dots: `${currentSVG.dots} Z`,
-        },
-      ]);
+      if (currentSVG.kind === "polygram") {
+        setCurrentSVGList([
+          ...currentSVGList,
+          {
+            ...currentSVG,
+            dots: `${currentSVG.dots} Z`,
+          },
+        ]);
+      }
     }
     setCurrentSVG({ ...currentSVG, dots: "" });
+    // 원일 경우
   };
 
   const onClickReset = () => {

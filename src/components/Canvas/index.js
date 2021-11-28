@@ -115,6 +115,7 @@ function Canvas() {
                 x2={currentSVG.dots[1][0]}
                 y2={currentSVG.dots[1][1]}
                 stroke={currentSVG.color}
+                stroke-width={currentSVG.weight}
               ></line>
             ) : (
               ""
@@ -155,6 +156,7 @@ function Canvas() {
                     x2={item.dots[1][0]}
                     y2={item.dots[1][1]}
                     stroke={item.color}
+                    stroke-width={item.weight}
                   ></line>
                 );
               }

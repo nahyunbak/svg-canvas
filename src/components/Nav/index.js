@@ -113,6 +113,9 @@ function Nav() {
             Math.pow(Math.abs(item.dots[0][0] - item.dots[1][0]), 2) +
               Math.pow(Math.abs(item.dots[0][1] - item.dots[1][1]), 2)
           )}"
+          stroke="${item.color}"
+          fill="${item.fillColor}"
+          stroke-width="${item.weight}"
         />`;
           }
           if (item.kind === "polygram") {
@@ -130,7 +133,6 @@ function Nav() {
           x2="${item.dots[1][0]}"
           y2="${item.dots[1][1]}"
           stroke="${item.color}"
-          fill="${item.fillColor}"
           stroke-width="${item.weight}"
         ></line>`;
           }

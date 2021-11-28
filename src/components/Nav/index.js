@@ -22,6 +22,7 @@ import {
 } from "./StyledNav";
 import { IoArrowBack, IoArrowForward } from "react-icons/io5";
 import { useResetRecoilState } from "recoil";
+import { set } from "mongoose";
 
 function Nav() {
   const [currentSVG, setCurrentSVG] = useRecoilState(currentShape);
@@ -32,6 +33,7 @@ function Nav() {
   const onClickFinish = () => {
     // 직선일 경우
     // 다각형일 경우
+    console.log(currentSVGList);
     if (currentSVG.dots.length !== 0) {
       setCurrentSVGList([...currentSVGList, currentSVG]);
     }
@@ -44,44 +46,47 @@ function Nav() {
     setCurrentSVG({ ...currentSVG, dots: "" });
   };
 
-  const onClickRedoOrUndo = (e) => {
-    if (currentSVG.dots.indexOf("L") !== -1) {
+  const onClickUndo = (e) => {
+    if (currentSVG.dots.length !== 0) {
       setCurrentSVG({
         ...currentSVG,
-        dots: currentSVG.dots.substring(
-          0,
-          currentSVG.dots.lastIndexOf("L") - 1
-        ),
+        dots: currentSVG.dots.slice(0, currentSVG.dots.length - 1),
       });
       setRedoSVGList([
         ...redoSVGList,
-        currentSVG.dots.substring(currentSVG.dots.lastIndexOf("L")),
+        currentSVG.dots[currentSVG.dots.length - 1],
       ]);
-      console.log(redoSVGList);
     }
-    if (currentSVG.dots.indexOf("L") === -1) {
+    if (currentSVG.dots.length === 0) {
       setCurrentSVGList(currentSVGList.slice(0, currentSVGList.length - 1));
+      setRedoSVGList([]);
       setHistoryRedoState([
         ...historyRedoState,
-        ...currentSVGList.slice(currentSVGList.length - 1),
+        currentSVGList[currentSVGList.length - 1],
       ]);
     }
   };
   // 중복이 되고 있으니까 이 부분을 좀 없애보기 ?
   // redoSVGList에 있는 값이 없어지면
-  const onClickRedoOrUndo2 = (e) => {
+  const onClickRedo = (e) => {
     if (redoSVGList.length !== 0) {
-      console.log(redoSVGList);
       setCurrentSVG({
         ...currentSVG,
-        dots: `${currentSVG.dots} ${redoSVGList[redoSVGList.length - 1]}`,
+        dots: [...currentSVG.dots, redoSVGList[redoSVGList.length - 1]],
       });
-      setRedoSVGList(redoSVGList.slice(0, redoSVGList.length - 1));
+      setRedoSVGList({
+        ...redoSVGList,
+        dotS: redoSVGList.dots.slice(0, redoSVGList.dots.length - 1),
+      });
     }
-    if (redoSVGList.length === 0 && historyRedoState.length !== 0) {
+    if (redoSVGList.length === 0) {
+      setCurrentSVG({
+        ...currentSVG,
+        dots: [],
+      });
       setCurrentSVGList([
         ...currentSVGList,
-        ...historyRedoState.slice(historyRedoState.length - 1),
+        historyRedoState[historyRedoState.length - 1],
       ]);
       setHistoryRedoState(
         historyRedoState.slice(0, historyRedoState.length - 1)
@@ -102,10 +107,10 @@ function Nav() {
           </NavFinishOrSaveWrapper>
 
           <NavDoWrapper>
-            <NavUndoButton name="undo">
+            <NavUndoButton name="undo" onClick={onClickUndo}>
               <IoArrowBack />
             </NavUndoButton>
-            <NavRedoButton name="redo">
+            <NavRedoButton name="redo" onClick={onClickRedo}>
               <IoArrowForward />
             </NavRedoButton>
           </NavDoWrapper>

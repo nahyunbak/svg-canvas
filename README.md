@@ -1,12 +1,5 @@
 # 프로젝트 소개
-✅ svg 벡터 기반의 그림판을 리셋, 저장, undo 및 redo 기능과 함께 구현했다.
-
-# 스크린샷 
-
-
-https://user-images.githubusercontent.com/61341571/143773600-b8ac2d28-853a-484b-9938-e9cc8ffbdd15.mp4
-
-
+✅ svg 벡터 그림판이다 
 
 # 기능 소개 
 ✅ 선택하기 : 종류, 색깔, 선 굵기, 채우기 색깔을 고를 수 있다.
@@ -21,12 +14,11 @@ https://user-images.githubusercontent.com/61341571/143773600-b8ac2d28-853a-484b-
 ✅ 저장하기 : 캔버스를 저장한다.
 
 
-
-
-
-
 # 배포 
 ✅ vercel을 사용하여 배포했다 :  https://svg-canvas.vercel.app/
 
+
+# 비디오  
+https://user-images.githubusercontent.com/61341571/143773600-b8ac2d28-853a-484b-9938-e9cc8ffbdd15.mp4
 
 

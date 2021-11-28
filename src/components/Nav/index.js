@@ -86,7 +86,7 @@ function Nav() {
         dotS: redoSVGList.dots.slice(0, redoSVGList.dots.length - 1),
       });
     }
-    if (redoSVGList.length === 0) {
+    if (redoSVGList.length === 0 && historyRedoState.length !== 0) {
       setCurrentSVG({
         ...currentSVG,
         dots: [],

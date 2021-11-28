@@ -33,15 +33,7 @@ function Nav() {
     // 직선일 경우
     // 다각형일 경우
     if (currentSVG.dots.length !== 0) {
-      if (currentSVG.kind === "polygram") {
-        setCurrentSVGList([
-          ...currentSVGList,
-          {
-            ...currentSVG,
-            dots: `${currentSVG.dots} Z`,
-          },
-        ]);
-      }
+      setCurrentSVGList([...currentSVGList, currentSVG]);
     }
     setCurrentSVG({ ...currentSVG, dots: "" });
     // 원일 경우
@@ -110,10 +102,10 @@ function Nav() {
           </NavFinishOrSaveWrapper>
 
           <NavDoWrapper>
-            <NavUndoButton name="undo" onClick={onClickRedoOrUndo}>
+            <NavUndoButton name="undo">
               <IoArrowBack />
             </NavUndoButton>
-            <NavRedoButton name="redo" onClick={onClickRedoOrUndo2}>
+            <NavRedoButton name="redo">
               <IoArrowForward />
             </NavRedoButton>
           </NavDoWrapper>

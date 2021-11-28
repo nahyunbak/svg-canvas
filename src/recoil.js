@@ -20,7 +20,7 @@ export const currentShapeDefault = {
   color: "black",
   weight: "1",
   fillColor: "none",
-  dots: "",
+  dots: [],
 };
 
 export const currentShape = atom({

@@ -33,41 +33,72 @@ function Canvas() {
   });
 
   const onClick = (e) => {
-    if (currentSVG.dots.length === 0) {
+    if (currentSVG.kind === "polygram" || currentSVG.kind === "line") {
       setCurrentSVG({
         ...currentSVG,
-        dots: `M${
-          e.clientX - cursorInput.current.getBoundingClientRect().left
-        } ${e.clientY - cursorInput.current.getBoundingClientRect().top}`,
+        dots: [
+          ...currentSVG.dots,
+          `${e.clientX - cursorInput.current.getBoundingClientRect().left}, ${
+            e.clientY - cursorInput.current.getBoundingClientRect().top
+          }`,
+        ],
       });
     }
-    if (currentSVG.dots.length !== 0) {
-      setCurrentSVG({
-        ...currentSVG,
-        dots: `${currentSVG.dots} L${
-          e.clientX - cursorInput.current.getBoundingClientRect().left
-        } ${e.clientY - cursorInput.current.getBoundingClientRect().top}`,
-      });
+    if (currentSVG.kind === "circle") {
+      if (currentSVG.dots.length <= 2) {
+        setCurrentSVG({
+          ...currentSVG,
+          dots: [
+            ...currentSVG.dots,
+            `${e.clientX - cursorInput.current.getBoundingClientRect().left}, ${
+              e.clientY - cursorInput.current.getBoundingClientRect().top
+            }`,
+          ],
+        });
+      }
+      if (currentSVG.dots.length > 2) {
+        setCurrentSVG({
+          ...currentSVG,
+          dots: [
+            `${e.clientX - cursorInput.current.getBoundingClientRect().left}, ${
+              e.clientY - cursorInput.current.getBoundingClientRect().top
+            }`,
+          ],
+        });
+      }
     }
-    console.log(SVGHistory);
-    // 현재 그림으로 jsx 반환하고
-    // 그림 리스트로 jsx 반환한다.
-    // undo를 하면 현재 그림의 점이 차례차례 사라지거나 / 원이 사라진다
-    // redo를 하면 가져와진다
-    // 저장이 된다.
   };
+  /**
+ * <path
+  d={item.dots}
+  stroke={item.color}
+  fill={item.fillColor}
+  stroke-width={item.weight}
+/>;
 
+ */
   return (
     <>
       <CanvasWrapper>
         <CanvasArea onClick={onClick} ref={cursorInput}>
           <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+            {currentSVG.kind === "polygram" && currentSVG.dots.length !== 0 ? (
+              <polygon
+                points={currentSVG.dots.join(" ")}
+                stroke={currentSVG.color}
+                fill={currentSVG.fillColor}
+                stroke-width={currentSVG.weight}
+              />
+            ) : (
+              ""
+            )}
+
             {currentSVGList.map((item) => {
               console.log(1);
-              if (item.kind === "line") {
+              if (item.kind === "polygram") {
                 return (
-                  <path
-                    d={item.dots}
+                  <polygon
+                    points={item.dots.join(" ")}
                     stroke={item.color}
                     fill={item.fillColor}
                     stroke-width={item.weight}
@@ -75,12 +106,6 @@ function Canvas() {
                 );
               }
             })}
-            <path
-              d={currentSVG.dots}
-              stroke={currentSVG.color}
-              fill={currentSVG.fillColor}
-              stroke-width={currentSVG.weight}
-            />
           </svg>
         </CanvasArea>
       </CanvasWrapper>

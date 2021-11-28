@@ -6,7 +6,7 @@ import { CenterCenterStyle } from "../GlobalStyle";
 
 export const CanvasWrapper = styled.div`
   width: 100vw;
-  height: 600px;
+  height: 700px;
   ${CenterCenterStyle};
 `;
 

@@ -15,11 +15,14 @@ import { currentShape } from "../../recoil";
 import { useRecoilState } from "recoil";
 
 function Tool() {
+  // 값이 바뀔 때마다 currentSVG, 즉 현재 도형의 정보를 업데이트해주는 onHandle 함수
   const handleChange = (e) => {
     setCurrentSVG({ ...currentSVG, ...{ [e.target.name]: e.target.value } });
   };
+  // 현재 도형의 정보를 저장해줄 recoil 값과 세터함수
   const [currentSVG, setCurrentSVG] = useRecoilState(currentShape);
 
+  // Box 이하 컴포넌트는 material UI를 사용했다.
   return (
     <>
       <ToolWrapper>

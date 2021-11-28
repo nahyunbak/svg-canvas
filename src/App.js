@@ -1,4 +1,3 @@
-import "./App.css";
 import Canvas from "./components/Canvas";
 import Nav from "./components/Nav";
 import Tool from "./components/Tool";

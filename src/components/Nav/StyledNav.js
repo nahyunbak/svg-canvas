@@ -107,3 +107,8 @@ export const NavRedoButton = styled.div`
   font-size: 1.5rem;
   color: white;
 `;
+
+export const NavSaveLink = styled.a`
+  text-decoration: none;
+  color: white;
+`;

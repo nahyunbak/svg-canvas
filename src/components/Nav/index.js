@@ -17,6 +17,7 @@ import {
   NavRedoButton,
   NavResetButton,
   NavSaveButton,
+  NavSaveLink,
   NavUndoButton,
   NavWrapper,
 } from "./StyledNav";
@@ -30,22 +31,63 @@ function Nav() {
   const [redoSVGList, setRedoSVGList] = useRecoilState(svgRedoState);
   const [historyRedoState, setHistoryRedoState] =
     useRecoilState(svgHistoryRedoState);
+
+  //그림 마무리 기능
   const onClickFinish = () => {
-    // 직선일 경우
-    // 다각형일 경우
     console.log(currentSVGList);
     if (currentSVG.dots.length !== 0) {
       setCurrentSVGList([...currentSVGList, currentSVG]);
     }
     setCurrentSVG({ ...currentSVG, dots: "" });
-    // 원일 경우
+    console.log(svgFileContents, 1);
   };
 
+  //저장 기능
+
+  const svgFileContents = currentSVGList.map((item) => {
+    if (item.kind === "circle") {
+      return `<circle
+          cx="${item.dots[0][0]}"
+          cy="${item.dots[0][1]}"
+          r="${Math.sqrt(
+            Math.pow(Math.abs(item.dots[0][0] - item.dots[1][0]), 2) +
+              Math.pow(Math.abs(item.dots[0][1] - item.dots[1][1]), 2)
+          )}"
+        />`;
+    }
+    if (item.kind === "polygram") {
+      return `<polygon
+          points="${item.dots.join(" ")}"
+          stroke="${item.color}"
+          fill="${item.fillColor}"
+          stroke-width="${item.weight}"
+        />`;
+    }
+    if (item.kind === "line") {
+      return `<line
+          x1="${item.dots[0][0]}"
+          y1="${item.dots[0][1]}"
+          x2="${item.dots[1][0]}"
+          y2="${item.dots[1][1]}"
+          stroke="${item.color}"
+        ></line>`;
+    }
+  });
+  const svgFile = `
+    <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
+    ${svgFileContents}
+    </svg>
+`;
+  const blob = new Blob([svgFile], { type: "image/svg+xml" });
+  const url = URL.createObjectURL(blob);
+
+  //reset 기능
   const onClickReset = () => {
     setCurrentSVGList([]);
     setCurrentSVG({ ...currentSVG, dots: "" });
   };
 
+  //undo 기능
   const onClickUndo = (e) => {
     if (currentSVG.dots.length !== 0) {
       setCurrentSVG({
@@ -66,8 +108,8 @@ function Nav() {
       ]);
     }
   };
-  // 중복이 되고 있으니까 이 부분을 좀 없애보기 ?
-  // redoSVGList에 있는 값이 없어지면
+
+  //redo 기능
   const onClickRedo = (e) => {
     if (redoSVGList.length !== 0) {
       setCurrentSVG({
@@ -99,7 +141,11 @@ function Nav() {
       <NavWrapper>
         <NavArea>
           <NavFinishOrSaveWrapper>
-            <NavSaveButton>저장하기</NavSaveButton>
+            <NavSaveButton>
+              <NavSaveLink href={url} download>
+                저장하기
+              </NavSaveLink>
+            </NavSaveButton>
             <NavFinishButton onClick={onClickFinish}>
               이번 그림 마무리하기
             </NavFinishButton>

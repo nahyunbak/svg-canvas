@@ -54,6 +54,8 @@ function Nav() {
 
   //undo 기능 onClick함수
   const onClickUndo = (e) => {
+    console.log(currentSVGList);
+
     if (currentSVG.dots.length !== 0) {
       setCurrentSVG({
         ...currentSVG,
@@ -64,7 +66,7 @@ function Nav() {
         currentSVG.dots[currentSVG.dots.length - 1],
       ]);
     }
-    if (currentSVG.dots.length === 0) {
+    if (currentSVG.dots.length === 0 && currentSVGList.length !== 0) {
       setCurrentSVGList(currentSVGList.slice(0, currentSVGList.length - 1));
       setRedoSVGList([]);
       setHistoryRedoState([
@@ -76,15 +78,13 @@ function Nav() {
 
   //redo 기능 onClick함수
   const onClickRedo = (e) => {
+    console.log(currentSVGList);
     if (redoSVGList.length !== 0) {
       setCurrentSVG({
         ...currentSVG,
         dots: [...currentSVG.dots, redoSVGList[redoSVGList.length - 1]],
       });
-      setRedoSVGList({
-        ...redoSVGList,
-        dotS: redoSVGList.dots.slice(0, redoSVGList.dots.length - 1),
-      });
+      setRedoSVGList(redoSVGList.slice(0, redoSVGList.length - 1));
     }
     if (redoSVGList.length === 0 && historyRedoState.length !== 0) {
       setCurrentSVG({
@@ -102,9 +102,11 @@ function Nav() {
   };
 
   // 저장 구현 1- svg 태그 내부의 정보를 map으로 추출
-  const svgFileContents = currentSVGList.map((item) => {
-    if (item.kind === "circle") {
-      return `<circle
+  const svgFileContents =
+    currentSVGList.length !== 0
+      ? currentSVGList.map((item) => {
+          if (item.kind === "circle") {
+            return `<circle
           cx="${item.dots[0][0]}"
           cy="${item.dots[0][1]}"
           r="${Math.sqrt(
@@ -112,25 +114,26 @@ function Nav() {
               Math.pow(Math.abs(item.dots[0][1] - item.dots[1][1]), 2)
           )}"
         />`;
-    }
-    if (item.kind === "polygram") {
-      return `<polygon
+          }
+          if (item.kind === "polygram") {
+            return `<polygon
           points="${item.dots.join(" ")}"
           stroke="${item.color}"
           fill="${item.fillColor}"
           stroke-width="${item.weight}"
         />`;
-    }
-    if (item.kind === "line") {
-      return `<line
+          }
+          if (item.kind === "line") {
+            return `<line
           x1="${item.dots[0][0]}"
           y1="${item.dots[0][1]}"
           x2="${item.dots[1][0]}"
           y2="${item.dots[1][1]}"
           stroke="${item.color}"
         ></line>`;
-    }
-  });
+          }
+        })
+      : "";
   // 저장 구현 2- svg 태그 내부의 정보를 svg 태그 사이에 끼어넣기
   const svgFile = `
     <svg width="500" height="500" xmlns="http://www.w3.org/2000/svg">
